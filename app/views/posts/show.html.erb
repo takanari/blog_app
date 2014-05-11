@@ -1,0 +1,12 @@
+<p>
+  <h2><%= new_line(@post.title) %></h2>
+</p>
+
+<p>
+  <%= new_line(@post.content) %>
+</p>
+
+<% if @post.user_id == session[:login] %>
+  <%= link_to '編集', edit_post_path(@post) %> |
+<% end %>
+<%= link_to '戻る', "/users/#{@post.user_id}/posts" %>

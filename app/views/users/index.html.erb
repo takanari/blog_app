@@ -1,0 +1,35 @@
+<h1>ユーザー一覧</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>名前</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= link_to 'ブログの表示', user_posts_path(user) %>
+        <% if user.id == session[:login] %>
+          <%= link_to '編集', edit_user_path(user) %>
+          <%= link_to '削除', user, method: :delete, data: { confirm: '削除してよろしいですか?' } %>
+        <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<div>
+  <%= link_to '全ブログ一覧', posts_path %> |
+  <% if session[:login] %>
+  <%= link_to 'ログアウト', login_path(0), method: :delete %>
+  <% else %>
+  <%= link_to '新規作成', new_post_path %> |
+  <%= link_to 'ログイン', new_login_path %>
+  <% end %>
+</div>

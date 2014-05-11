@@ -1,0 +1,27 @@
+<%= form_for(@post) do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @post.errors.count %>つの入力間違いがあります:</h2>
+      <ul>
+      <% @post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title, :size => 50 %>
+  </div>
+  <div class="field">
+    <%= f.label :content %><br>
+    <%= f.text_area :content, :cols => 50, :rows => 20 %>
+  </div>
+  <div>
+  <% f.select :user_id, User.where(id: session[:login]).map{|u|[u.name, u.id]} %>
+  </div>
+  <div class="actions">
+    <%= f.submit "作成"%>
+  </div>
+<% end %>

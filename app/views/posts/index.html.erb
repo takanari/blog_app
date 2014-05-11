@@ -1,0 +1,37 @@
+<h1>
+  <%= User.find(params[:user_id]).name if params[:user_id] %> 
+ブログ一覧</h1>
+
+<table>
+  <tbody>
+    <% @posts.each do |post| %>
+      <tr>
+        <td><h4><%= post.title %>
+          written by
+          <%= post.user.name %>
+        </h4></td>
+        <td><%= link_to '表示', post %>
+        <% if post.user_id == session[:login] %>
+          <%= link_to '編集', edit_post_path(post) %>
+          <%= link_to '削除', post, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %></td>
+      </tr>
+      <tr>
+        <td colspan="2"><%= truncate(post.content, :length =>100) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<div>
+  <%= link_to '全ブログ一覧', posts_path %> |
+  <%= link_to 'ユーザー一覧', users_path %> |
+  <% if session[:login] %>
+    <%= link_to '新規作成', new_post_path %> |
+    <%= link_to 'ログアウト', login_path(0), method: :delete %>
+  <% else %>
+    <%= link_to 'ログイン', new_login_path %>
+  <% end %>
+</div>
